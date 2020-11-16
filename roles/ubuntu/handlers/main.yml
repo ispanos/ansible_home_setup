@@ -1,0 +1,7 @@
+- name: Move exa in to PATH
+  become: true
+  copy: 
+    remote_src: yes
+    src: /tmp/exa-linux-x86_64 
+    dest: /usr/local/bin/exa
+    mode: u=rwx,g=rwx,o=rx

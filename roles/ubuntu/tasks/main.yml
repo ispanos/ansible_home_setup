@@ -1,0 +1,55 @@
+- name: Update OS
+  become: true
+  apt: 
+    upgrade: dist
+    update_cache: yes
+
+- name: Install QEMU guest additions
+  become: true
+  apt: 
+    name: qemu-guest-agent
+    when:  ansible_facts['system_vendor'] ==  "QEMU"
+
+- name: Install zsh with syntax highlighting and command-not-found
+  become: true
+  apt: 
+    name: ['zsh', 'zsh-syntax-highlighting', 'command-not-found' ]
+
+- name: Install TUI/CLI packages
+  become: true
+  apt:
+    name:
+    - atool
+    - borgbackup
+    - calcurse
+    - dialog
+    - docx2txt
+    - fzf
+    - highlight
+    - htop
+    - inxi
+    - molly-guard
+    - neofetch
+    - nmap
+    - odt2txt
+    - p7zip-full
+    - procinfo
+    - python3-llfuse
+    - sshfs
+    - tmux
+    - tree
+    - unrar
+    - w3m
+    - pv
+    - etherwake
+    - smartmontools
+    - hunspell-el
+
+- name: Download exa
+  become: true
+  unarchive:
+    src: https://github.com//ogham/exa/releases/download/v0.9.0/exa-linux-x86_64-0.9.0.zip
+    dest: /tmp
+    remote_src: yes
+  notify:
+    - Move exa in to PATH
