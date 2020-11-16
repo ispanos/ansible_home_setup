@@ -1,0 +1,9 @@
+- hosts: all
+  roles:
+    - ufw
+    - ufw-pc
+    - ubuntu
+    - desktop
+    - workstation
+    - logi
+    - dotfiles
