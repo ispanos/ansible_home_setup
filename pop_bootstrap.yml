@@ -8,5 +8,12 @@
     - logi
     - dotfiles
 
-# Run test locally
+# - hosts: all
+#   tasks:
+#     - debug: msg=test
+
+## Testing a playbook without inventory and cfg file, locally 
 # ansible-playbook -K -i localhost, pop_bootstrap.yml -c local
+
+# NEEDED!!!
+# ansible-galaxy collection install community.general
