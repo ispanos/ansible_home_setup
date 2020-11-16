@@ -1,4 +1,22 @@
 - hosts: all
+
+  tasks:
+  - name: Remove unused languages
+    become: true
+    apt:
+      name:
+      - firefox-locale-ar
+      - firefox-locale-de
+      - firefox-locale-es
+      - firefox-locale-fr
+      - firefox-locale-it
+      - firefox-locale-ja
+      - firefox-locale-pt
+      - firefox-locale-ru
+      - firefox-locale-zh-hans
+      - firefox-locale-zh-hant
+      state: absent
+
   roles:
     - ufw
     - ufw-pc
