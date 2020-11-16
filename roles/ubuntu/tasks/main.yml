@@ -1,14 +1,15 @@
-- name: Update OS
+- name: Update all native packages
   become: true
   apt: 
-    upgrade: dist
+    name: "*"
+    state: latest
     update_cache: yes
 
 - name: Install QEMU guest additions
   become: true
   apt: 
     name: qemu-guest-agent
-    when:  ansible_facts['system_vendor'] ==  "QEMU"
+  when:  ansible_facts['system_vendor'] ==  "QEMU"
 
 - name: Install zsh with syntax highlighting and command-not-found
   become: true

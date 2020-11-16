@@ -17,10 +17,12 @@
 
 
 - name: Add OBS ppa
+  become: yes
   apt_repository:
     repo: ppa:obsproject/obs-studio
 
 - name: Update repositories cache and install obs-studio
+  become: yes
   apt:
     name: obs-studio
     update_cache: yes
