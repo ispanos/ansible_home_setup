@@ -1,0 +1,21 @@
+---
+- name: Enable and start the ufw service
+  become: true
+  systemd:
+    name: ufw
+    enabled: yes
+    state: started
+
+- name: Limit incoming ssh traffic through the firewall
+  become: true
+  ufw:
+    rule: limit
+    to_port: ssh
+    proto: tcp
+
+- name: Enable firewall
+  become: true
+  ufw:
+    default: deny
+    logging: 'on'
+    state: enabled
