@@ -1,0 +1,122 @@
+- name: Install gui packages
+  become: true
+  apt:
+    name: ['gthumb','mpv','paprefs','pavucontrol','aptitude','python3-pip','google-chrome-stable']
+    #,'qt5-style-kvantum','qt5-style-kvantum-themes'
+
+- name: Install youtube_dl
+  become: true
+  pip:
+    name: youtube_dl
+    state: latest
+
+- name: Install awesome font
+  become: true
+  apt:
+    name: fonts-font-awesome
+
+
+- name: Add OBS ppa
+  apt_repository:
+    repo: ppa:obsproject/obs-studio
+
+- name: Update repositories cache and install obs-studio
+  apt:
+    name: obs-studio
+    update_cache: yes
+
+
+- name: Install flatpak
+  become: true
+  apt:
+    name: flatpak
+
+- name: Add the flathub flatpak repository remote to the user installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: user
+
+- name: Add the flathub flatpak repository remote to the system installation
+  become: yes
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+
+- name: Install Pop-dark theme from flathub
+  become: true
+  community.general.flatpak:
+    name: org.gtk.Gtk3theme.Pop-dark
+
+
+- name: Install Transmission from flathub
+  become: true
+  community.general.flatpak:
+    name: com.transmissionbt.Transmission
+
+- name: Install Qalculate from flathub
+  become: true
+  community.general.flatpak:
+    name: io.github.Qalculate
+
+- name: Install Color picker from flathub
+  become: true
+  community.general.flatpak:
+    name: nl.hjdskes.gcolor3
+
+
+- name: Install MS Teams from flathub
+  become: true
+  community.general.flatpak:
+    name: com.microsoft.Teams
+
+
+- name: Install Discord from flathub
+  become: true
+  community.general.flatpak:
+    name: com.discordapp.Discord
+
+- name: Install Mattermost from flathub
+  become: true
+  community.general.flatpak:
+    name: com.mattermost.Desktop
+
+- name: Install Slack  from flathub
+  become: true
+  community.general.flatpak:
+    name: com.slack.Slack
+
+- name: Install Zoom from flathub
+  become: true
+  community.general.flatpak:
+    name: us.zoom.Zoom
+
+
+- name: Install Video Trimmer from flathub
+  become: true
+  community.general.flatpak:
+    name: org.gnome.gitlab.YaLTeR.VideoTrimmer
+
+- name: Install GIMP from flathub
+  become: true
+  community.general.flatpak:
+    name: org.gimp.GIMP
+
+- name: Install Audacity from flathub
+  become: true
+  community.general.flatpak:
+    name: org.audacityteam.Audacity
+
+
+- name: Install OpenArena from flathub
+  become: true
+  community.general.flatpak:
+    name: ws.openarena.OpenArena
+
+- name: Install OpenTTD from flathub
+  become: true
+  community.general.flatpak:
+    name: org.openttd.OpenTTD
+
