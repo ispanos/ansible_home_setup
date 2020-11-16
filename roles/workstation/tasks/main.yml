@@ -1,0 +1,41 @@
+- name: Install dev packages
+  become: true
+  apt:
+    name: 
+    - cmake
+    - gitg
+    - neovim
+    - python3-autopep8
+    - python3-pip
+    - shellcheck
+    - node-typescript
+
+- name: Install alacritty and code - Pop packages
+  block:
+  - name: Install alacritty and code
+    become: true
+    apt:
+      name: ['alacritty', 'code']
+  rescue:
+  - debug:
+      msg: 'Can not install alacritty and code. Add PPAs if you are using Ubuntu.'
+
+- name: Create a symbolic link for VS Code Dictionaries
+  file:
+    src: /usr/share/hunspell/*
+    dest: "{{ ansible_user_dir|quote }}/.config/Code/Dictionaries"
+    state: link
+    # ln -s /usr/share/hunspell/* ~/.config/Code/Dictionaries
+
+- name: Install virtualization packages
+  become: true
+  apt:
+    name: [ 'qemu', 'ebtables', 'virt-manager', 'virtualbox']
+  when:  ansible_facts['system_vendor'] !=  "QEMU"
+
+- name: Install ansible
+  become: true
+  pip:
+    name: ['ansible','ansible-lint']
+    state: latest
+
