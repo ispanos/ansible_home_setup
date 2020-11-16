@@ -1,0 +1,34 @@
+- name: Remove doc links from motd
+  become: true
+  file:
+    path: /etc/update-motd.d/10-help-text
+    state: absent
+
+- name: Remove default bash files
+  file:
+    path: '{{ item }}'
+    state: absent
+  with_items:
+    - "{{ ansible_user_dir|quote }}/.bash_history"
+    - "{{ ansible_user_dir|quote }}/.bashrc"
+    - "{{ ansible_user_dir|quote }}/.bash_logout"
+
+- name: Change default shell to zsh
+  become: true
+  user: 
+    name: "{{ ansible_user_id }}"
+    shell: /usr/bin/zsh
+
+- name: Clone dotfiles - bare repository
+  shell: |
+      dotfilesrepo="https://github.com/ispanos/dotfiles"
+      dir=$(/usr/bin/mktemp -d)
+      echo ".cfg" >"$dir/.gitignore"
+      /usr/bin/git clone -q --bare "$dotfilesrepo" "$dir/.cfg"
+      /usr/bin/git --git-dir="$dir/.cfg/" --work-tree="$dir" checkout
+      /usr/bin/git --git-dir="$dir/.cfg/" --work-tree="$dir" config \
+        --local status.showUntrackedFiles no
+      /usr/bin/rm "$dir/.gitignore"
+      /usr/bin/cp -rfT "$dir/" "{{ ansible_user_dir|quote }}"
+  args:
+    creates: "{{ ansible_user_dir|quote }}/.cfg"
