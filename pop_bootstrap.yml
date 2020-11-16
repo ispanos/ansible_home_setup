@@ -7,3 +7,6 @@
     - workstation
     - logi
     - dotfiles
+
+# Run test locally
+# ansible-playbook -K -i localhost, pop_bootstrap.yml -c local
