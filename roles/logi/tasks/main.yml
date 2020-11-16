@@ -1,0 +1,29 @@
+- name: Install G810 driver
+  become: true
+  apt:
+    name: g810-led
+
+- name: Install unifying reciever driver
+  become: true
+  apt:
+    name: solaar
+# (solaar-gnome3)
+
+- name: G810-Profile
+  become: true
+  copy: 
+    content: |
+      a 856054
+      k logo 000030
+      k win_left 000030
+      k win_right 000030
+      k game_mode ff0000
+      k caps_indicator ff0000
+      k scrolllock 000000
+      k num_indicator ffffff
+      k light 505050
+      g arrows 000030
+      c
+    dest: /etc/g810-led/profile
+    mode: u=rw,g=r,o=r
+    backup: yes
