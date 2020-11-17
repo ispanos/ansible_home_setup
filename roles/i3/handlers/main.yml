@@ -1,0 +1,22 @@
+- name: Build xkb-switch
+  shell: |
+    mkdir build 
+    cd build
+    cmake .. 
+    make
+  args:
+    chdir: "{{ ansible_user_dir|quote }}/.local/share/build_sources/xkb-switch"
+    warn: no
+
+- name: Make-install_xkb-switch
+  become: true
+  shell: make install && ldconfig
+  args:
+    chdir: "{{ ansible_user_dir|quote }}/.local/share/build_sources/xkb-switch/build"
+
+- name: xkb-switch-clean
+  become: true
+  shell: make clean
+  args:
+    chdir: "{{ ansible_user_dir|quote }}/.local/share/build_sources/xkb-switch/build"
+    removes: /usr/local/bin/xkb-switch

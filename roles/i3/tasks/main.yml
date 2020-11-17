@@ -1,0 +1,44 @@
+- name: Install i3 and related packages
+  become: true
+  apt:
+    name:
+    - arandr
+    - blueman
+    - feh
+    - i3
+    - i3blocks
+    - imagemagick
+    - jq
+    - libnotify-bin
+    - maim
+    - numlockx
+    - pavucontrol
+    - playerctl
+    - policykit-1-gnome
+    - xbacklight
+    - xdotool
+    - xsettingsd
+    - libxkbfile-dev
+    - fonts-font-awesome
+
+- name: Install i3ipc
+  become: true
+  pip:
+    name: i3ipc
+    state: latest
+
+- name: Install autotiling
+  become: true
+  get_url:
+    url: https://raw.githubusercontent.com/nwg-piotr/autotiling/master/autotiling.py
+    dest: /usr/local/bin/autotiling
+    mode: u=rwx,g=rwx,o=rx
+
+- name: Download xkb-switch
+  git:
+    repo: 'https://github.com/grwlf/xkb-switch.git'
+    dest: "{{ ansible_user_dir|quote }}/.local/share/build_sources/xkb-switch"
+  notify:
+    - Build xkb-switch
+    - Make-install_xkb-switch
+    - xkb-switch-clean
