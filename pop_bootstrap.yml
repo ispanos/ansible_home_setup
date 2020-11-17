@@ -1,4 +1,16 @@
+---
 - hosts: all
+
+  roles:
+    - ssh
+    - ufw
+    - ufw-pc
+    - ubuntu
+    - desktop
+    - workstation
+    - logi
+    - dotfiles
+    - it87
 
   tasks:
   - name: Remove unused languages
@@ -17,15 +29,12 @@
       - firefox-locale-zh-hant
       state: absent
 
-  roles:
-    - ssh
-    - ufw
-    - ufw-pc
-    - ubuntu
-    - desktop
-    - workstation
-    - logi
-    - dotfiles
+  - name: Create a list of packages after fresh installation
+    shell: |
+      apt list --installed 2>/dev/null \
+          >{{ ansible_user_dir|quote }}/.local/Fresh_pack_list
+    args:
+      creates: "{{ ansible_user_dir|quote }}/.local/Fresh_pack_list"
 
 # - hosts: all
 #   tasks:
