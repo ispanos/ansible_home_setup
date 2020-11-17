@@ -1,0 +1,42 @@
+- name: Check if it87 driver is needed
+  become: true
+  shell: |
+    read -r -d '' ioSensors <<-EOF
+        IT8603E IT8623E IT8620E IT8622E IT8625E IT8665E IT8705F IT8712F
+        IT8716F IT8726F IT8720F IT8721F IT8758E IT8728F IT8732F IT8771E
+        IT8772E IT8781F IT8782F IT8783E IT8783F IT8790E SiS950
+    EOF
+
+    sensors_out=$(sensors-detect --auto)
+
+    for chip in $ioSensors; do
+        if grep -q "$chip" <<< "$sensors_out"; then
+            echo "yes"
+        fi
+    done
+  args:
+    executable: /bin/bash
+  register: sensor_needed
+
+- name: Install it87 driver
+  block:
+  - name: Download it87 driver
+    git:
+      repo: 'https://github.com/bbqlinux/it87'
+      dest: "{{ ansible_user_dir|quote }}/.local/share/build_sources/it87"
+
+  - name: Make it87 driver
+    make:
+      chdir: "{{ ansible_user_dir|quote }}/.local/share/build_sources/it87"
+
+  - name: Make - install and enable it87 driver
+    become: true
+    shell: |
+        make install &&
+        make dkms &&
+        modprobe it87 &&
+        echo "it87" > /etc/modules-load.d/it87.conf
+  when: sensor_needed.stdout_lines[0]  == "yes"
+  rescue:
+  - debug:
+      msg: 'it87 driver not needed.'
