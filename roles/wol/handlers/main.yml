@@ -1,0 +1,7 @@
+- name: Enable wake on lan service
+  become: true
+  systemd:
+    name: wol@{{ ansible_default_ipv4.interface }}.service
+    enabled: yes
+    state: started
+    daemon_reload: yes
