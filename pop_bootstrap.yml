@@ -8,6 +8,7 @@
     - ubuntu
     - desktop
     - workstation
+    - docker
     - logi
     - dotfiles
     - it87
