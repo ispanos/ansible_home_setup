@@ -26,6 +26,7 @@
     - dialog
     - docx2txt
     - fzf
+    - hddtemp
     - highlight
     - htop
     - inxi
@@ -33,6 +34,7 @@
     - neofetch
     - needrestart
     - nmap
+    - nvme-cli
     - odt2txt
     - p7zip-full
     - procinfo
