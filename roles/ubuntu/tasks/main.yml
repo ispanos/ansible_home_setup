@@ -1,9 +1,9 @@
-- name: Update all native packages
+- name: Upgrade the OS (apt-get dist-upgrade)
   become: true
-  apt: 
-    name: "*"
-    state: latest
+  apt:
+    upgrade: dist
     update_cache: yes
+    cache_valid_time: 3600
 
 - name: Install QEMU guest additions
   become: true
@@ -11,20 +11,19 @@
     name: qemu-guest-agent
   when:  ansible_facts['system_vendor'] ==  "QEMU"
 
-- name: Install zsh with syntax highlighting and command-not-found
-  become: true
-  apt: 
-    name: ['zsh', 'zsh-syntax-highlighting', 'command-not-found' ]
-
 - name: Install TUI/CLI packages
   become: true
   apt:
     name:
+    - zsh
+    - zsh-syntax-highlighting
+    - command-not-found
     - atool
     - borgbackup
     - calcurse
     - dialog
     - docx2txt
+    - fail2ban
     - fzf
     - hddtemp
     - highlight
@@ -33,7 +32,6 @@
     - molly-guard
     - neofetch
     - needrestart
-    - nmap
     - nvme-cli
     - odt2txt
     - p7zip-full
@@ -44,10 +42,11 @@
     - tree
     - unrar
     - w3m
+    - whois
+    - powertop
     - pv
     - etherwake
     - smartmontools
-    - hunspell-el
 
 - name: Download exa
   become: true
