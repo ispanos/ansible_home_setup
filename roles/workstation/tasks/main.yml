@@ -1,4 +1,10 @@
-- name: Install dev packages
+- name: Add sqlitebrowser ppa
+  become: yes
+  apt_repository:
+    repo: ppa:linuxgndu/sqlitebrowser
+    update_cache: yes
+
+- name: Install WS packages
   become: true
   apt:
     name: 
@@ -9,6 +15,8 @@
     - python3-pip
     - shellcheck
     - node-typescript
+    - sqlitebrowser
+    - nmap
 
 - name: Install alacritty and code - Pop packages
   block:
@@ -38,4 +46,9 @@
   pip:
     name: ['ansible','ansible-lint']
     state: latest
+
+- name: Install Uni packages
+  become: true
+  apt:
+    name: gretl
 
