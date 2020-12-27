@@ -4,6 +4,9 @@
     repo: ppa:obsproject/obs-studio
     update_cache: yes
 
+# https://support.system76.com/articles/codecs/
+# sudo DEBIAN_FRONTEND=noninteractive apt-get -y install ubuntu-restricted-addons
+
 - name: Install Desktop packages
   become: true
   apt:
