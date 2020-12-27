@@ -52,3 +52,14 @@
   apt:
     name: gretl
 
+- name: Install WS flatpaks
+  become: true
+  vars:
+    packages:
+      - io.dbeaver.DBeaverCommunity
+      - io.dbeaver.DBeaverCommunity.Client.mariadb
+      - org.remmina.Remmina
+  community.general.flatpak:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ packages }}"
