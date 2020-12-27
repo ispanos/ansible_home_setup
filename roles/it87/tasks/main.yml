@@ -32,11 +32,10 @@
   - name: Make - install and enable it87 driver
     become: true
     shell: |
-        make install &&
         make dkms &&
         modprobe it87 &&
         echo "it87" > /etc/modules-load.d/it87.conf
-  when: sensor_needed.stdout_lines[0]  == "yes"
+  when: sensor_needed.stdout  == "yes"
   rescue:
   - debug:
-      msg: 'it87 driver not needed.'
+      msg: 'it87 driver not needed/ failed to install.'
