@@ -5,10 +5,8 @@
     - ssh
     - ufw
     - ufw-pc
-    - ubuntu
-    - desktop
-    - workstation
-    - docker
+    - pop_ws
+    - docker_ubuntu
     - logi
     - dotfiles
     - it87
