@@ -13,11 +13,17 @@
     - "{{ ansible_user_dir|quote }}/.bashrc"
     - "{{ ansible_user_dir|quote }}/.bash_logout"
 
+- name: Check if zsh is installed
+  stat:
+    path: /usr/bin/zsh
+  register: zsh_result
+
 - name: Change default shell to zsh
   become: true
   user: 
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
+  when: zsh_result.stat.exists
 
 - name: Clone dotfiles - bare repository
   shell: |
@@ -27,7 +33,7 @@
       /usr/bin/git clone -q --bare "$dotfilesrepo" "$dir/.cfg"
       /usr/bin/git --git-dir="$dir/.cfg/" --work-tree="$dir" checkout
       /usr/bin/git --git-dir="$dir/.cfg/" --work-tree="$dir" config \
-        --local status.showUntrackedFiles no
+                   --local status.showUntrackedFiles no
       /usr/bin/rm "$dir/.gitignore"
       /usr/bin/cp -rfT "$dir/" "{{ ansible_user_dir|quote }}"
   args:
