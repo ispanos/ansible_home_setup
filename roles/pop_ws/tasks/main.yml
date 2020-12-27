@@ -1,3 +1,63 @@
+- name: Upgrade the OS (apt-get dist-upgrade)
+  become: true
+  apt:
+    upgrade: dist
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install QEMU guest additions
+  become: true
+  apt: 
+    name: qemu-guest-agent
+  when:  ansible_facts['system_vendor'] ==  "QEMU"
+
+- name: Install TUI/CLI packages
+  become: true
+  apt:
+    name:
+    - zsh
+    - zsh-syntax-highlighting
+    - command-not-found
+    - atool
+    - borgbackup
+    - calcurse
+    - dialog
+    - docx2txt
+    - fail2ban
+    - fzf
+    - hddtemp
+    - highlight
+    - htop
+    - inxi
+    - molly-guard
+    - neofetch
+    - needrestart
+    - nvme-cli
+    - odt2txt
+    - p7zip-full
+    - procinfo
+    - python3-llfuse
+    - sshfs
+    - tmux
+    - tree
+    - unrar
+    - w3m
+    - whois
+    - powertop
+    - pv
+    - etherwake
+    - smartmontools
+
+- name: Download exa
+  become: true
+  unarchive:
+    src: https://github.com//ogham/exa/releases/download/v0.9.0/exa-linux-x86_64-0.9.0.zip
+    dest: /tmp
+    remote_src: yes
+  notify:
+    - Move exa in to PATH
+
+
 - name: Add sqlitebrowser ppa
   become: yes
   apt_repository:
