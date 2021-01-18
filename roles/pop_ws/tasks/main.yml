@@ -20,6 +20,7 @@
     - command-not-found
     - atool
     - borgbackup
+    - btrfs-progs
     - calcurse
     - dialog
     - docx2txt
