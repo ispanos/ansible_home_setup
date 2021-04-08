@@ -2,8 +2,8 @@
 - hosts: all
 
   roles:
-    - ssh
-    # - ufw Replace with ispanos.security
+    # - ssh Replace with ispanos.security
+    - ufw 
     - ufw-pc
     - pop_ws
     # - docker_ubuntu Replace with geerlingguy.docker
