@@ -1,3 +1,4 @@
+---
 # On actual servers with a management port,
 # add the proper interface.
 
@@ -5,6 +6,6 @@
   become: true
   systemd:
     name: wol@{{ ansible_default_ipv4.interface }}.service
-    enabled: yes
+    enabled: true
     state: started
-    daemon_reload: yes
+    daemon_reload: true

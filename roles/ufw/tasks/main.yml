@@ -3,7 +3,7 @@
   become: true
   systemd:
     name: ufw
-    enabled: yes
+    enabled: true
     state: started
 
 - name: Limit incoming ssh traffic through the firewall

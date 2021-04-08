@@ -1,25 +1,26 @@
+---
 - name: Install i3 and related packages
   become: true
   apt:
     name:
-    - arandr
-    - blueman
-    - feh
-    - i3
-    - i3blocks
-    - imagemagick
-    - jq
-    - libnotify-bin
-    - maim
-    - numlockx
-    - pavucontrol
-    - playerctl
-    - policykit-1-gnome
-    - xbacklight
-    - xdotool
-    - xsettingsd
-    - libxkbfile-dev
-    - fonts-font-awesome
+      - arandr
+      - blueman
+      - feh
+      - i3
+      - i3blocks
+      - imagemagick
+      - jq
+      - libnotify-bin
+      - maim
+      - numlockx
+      - pavucontrol
+      - playerctl
+      - policykit-1-gnome
+      - xbacklight
+      - xdotool
+      - xsettingsd
+      - libxkbfile-dev
+      - fonts-font-awesome
 
 - name: Install i3ipc
   become: true

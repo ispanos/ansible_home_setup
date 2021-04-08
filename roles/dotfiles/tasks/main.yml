@@ -1,3 +1,4 @@
+---
 - name: Remove doc links from motd
   become: true
   file:
@@ -20,7 +21,7 @@
 
 - name: Change default shell to zsh
   become: true
-  user: 
+  user:
     name: "{{ ansible_user_id }}"
     shell: /usr/bin/zsh
   when: zsh_result.stat.exists

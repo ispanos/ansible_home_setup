@@ -3,43 +3,43 @@
 
   roles:
     - ssh
-    - ufw
+    # - ufw Replace with ispanos.security
     - ufw-pc
     - pop_ws
-    - docker_ubuntu
+    # - docker_ubuntu Replace with geerlingguy.docker
     - logi
     - dotfiles
     - it87
 
   tasks:
-  - name: Remove unused languages
-    become: true
-    apt:
-      name:
-      - firefox-locale-ar
-      - firefox-locale-de
-      - firefox-locale-es
-      - firefox-locale-fr
-      - firefox-locale-it
-      - firefox-locale-ja
-      - firefox-locale-pt
-      - firefox-locale-ru
-      - firefox-locale-zh-hans
-      - firefox-locale-zh-hant
-      state: absent
+    - name: Remove unused languages
+      become: true
+      apt:
+        name:
+          - firefox-locale-ar
+          - firefox-locale-de
+          - firefox-locale-es
+          - firefox-locale-fr
+          - firefox-locale-it
+          - firefox-locale-ja
+          - firefox-locale-pt
+          - firefox-locale-ru
+          - firefox-locale-zh-hans
+          - firefox-locale-zh-hant
+        state: absent
 
-  - name: Create a list of packages after fresh installation
-    shell: |
-      apt list --installed 2>/dev/null \
-          >{{ ansible_user_dir|quote }}/.local/Fresh_pack_list
-    args:
-      creates: "{{ ansible_user_dir|quote }}/.local/Fresh_pack_list"
+    - name: Create a list of packages after fresh installation
+      shell: |
+        apt list --installed 2>/dev/null \
+            >{{ ansible_user_dir|quote }}/.local/Fresh_pack_list
+      args:
+        creates: "{{ ansible_user_dir|quote }}/.local/Fresh_pack_list"
 
 # - hosts: all
 #   tasks:
 #     - debug: msg=test
 
-## Testing a playbook without inventory and cfg file, locally 
+## Testing a playbook without inventory and cfg file, locally
 # ansible-playbook -K -i localhost, pop_bootstrap.yml -c local
 
 # NEEDED!!!

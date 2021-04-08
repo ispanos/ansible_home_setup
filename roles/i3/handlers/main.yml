@@ -1,12 +1,13 @@
+---
 - name: Build xkb-switch
   shell: |
-    mkdir build 
+    mkdir build
     cd build
-    cmake .. 
+    cmake ..
     make
   args:
     chdir: "{{ ansible_user_dir|quote }}/.local/share/build_sources/xkb-switch"
-    warn: no
+    warn: false
 
 - name: Make-install_xkb-switch
   become: true

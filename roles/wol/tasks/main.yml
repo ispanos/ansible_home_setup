@@ -1,6 +1,7 @@
+---
 - name: Add wake-on-lan systemd service
   become: true
-  copy: 
+  copy:
     content: |
       [Unit]
       Description=Wake-on-LAN for %i

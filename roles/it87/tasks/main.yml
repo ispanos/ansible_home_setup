@@ -1,3 +1,4 @@
+---
 - name: Check if it87 driver is needed
   become: true
   shell: |
@@ -20,22 +21,22 @@
 
 - name: Install it87 driver
   block:
-  - name: Download it87 driver
-    git:
-      repo: 'https://github.com/bbqlinux/it87'
-      dest: "{{ ansible_user_dir|quote }}/.local/share/build_sources/it87"
+    - name: Download it87 driver
+      git:
+        repo: 'https://github.com/bbqlinux/it87'
+        dest: "{{ ansible_user_dir|quote }}/.local/share/build_sources/it87"
 
-  - name: Make it87 driver
-    make:
-      chdir: "{{ ansible_user_dir|quote }}/.local/share/build_sources/it87"
+    - name: Make it87 driver
+      make:
+        chdir: "{{ ansible_user_dir|quote }}/.local/share/build_sources/it87"
 
-  - name: Make - install and enable it87 driver
-    become: true
-    shell: |
-        make dkms &&
-        modprobe it87 &&
-        echo "it87" > /etc/modules-load.d/it87.conf
+    - name: Make - install and enable it87 driver
+      become: true
+      shell: |
+          make dkms &&
+          modprobe it87 &&
+          echo "it87" > /etc/modules-load.d/it87.conf
   when: sensor_needed.stdout  == "yes"
   rescue:
-  - debug:
-      msg: 'it87 driver not needed/ failed to install.'
+    - debug:
+        msg: 'it87 driver not needed/ failed to install.'

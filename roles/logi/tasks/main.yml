@@ -1,3 +1,4 @@
+---
 - name: Install G810 driver
   become: true
   apt:
@@ -11,7 +12,7 @@
 
 - name: G810-Profile
   become: true
-  copy: 
+  copy:
     content: |
       a 856054
       k logo 000030
@@ -26,4 +27,4 @@
       c
     dest: /etc/g810-led/profile
     mode: u=rw,g=r,o=r
-    backup: yes
+    backup: true

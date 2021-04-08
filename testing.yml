@@ -4,7 +4,7 @@
   tasks:
     - debug: msg=test
 
-## Testing a playbook without inventory and cfg file, locally 
+## Testing a playbook without inventory and cfg file, locally
 # ansible-playbook -K -i localhost, testing.yml -c local
 
 # NEEDED!!!

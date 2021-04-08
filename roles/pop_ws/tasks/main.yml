@@ -1,75 +1,76 @@
+---
 - name: Upgrade the OS (apt-get dist-upgrade)
   become: true
   apt:
     upgrade: dist
-    update_cache: yes
+    update_cache: true
     cache_valid_time: 3600
 
 - name: Install QEMU guest additions
   become: true
-  apt: 
+  apt:
     name: qemu-guest-agent
-  when:  ansible_facts['system_vendor'] ==  "QEMU"
+  when: ansible_facts['system_vendor'] ==  "QEMU"
 
 - name: Install TUI/CLI packages
   become: true
   apt:
     name:
-    - zsh
-    - zsh-syntax-highlighting
-    - command-not-found
-    - atool
-    - borgbackup
-    - btrfs-progs
-    - calcurse
-    - dialog
-    - docx2txt
-    - fail2ban
-    - fzf
-    - hddtemp
-    - highlight
-    - htop
-    - inxi
-    - molly-guard
-    - neofetch
-    - needrestart
-    - nvme-cli
-    - odt2txt
-    - p7zip-full
-    - procinfo
-    - python3-llfuse
-    - sshfs
-    - tmux
-    - tree
-    - unrar
-    - w3m
-    - whois
-    - powertop
-    - pv
-    - etherwake
-    - smartmontools
+      - zsh
+      - zsh-syntax-highlighting
+      - command-not-found
+      - atool
+      - borgbackup
+      - btrfs-progs
+      - calcurse
+      - dialog
+      - docx2txt
+      - fail2ban
+      - fzf
+      - hddtemp
+      - highlight
+      - htop
+      - inxi
+      - molly-guard
+      - neofetch
+      - needrestart
+      - nvme-cli
+      - odt2txt
+      - p7zip-full
+      - procinfo
+      - python3-llfuse
+      - sshfs
+      - tmux
+      - tree
+      - unrar
+      - w3m
+      - whois
+      - powertop
+      - pv
+      - etherwake
+      - smartmontools
 
 - name: Download exa
   become: true
   unarchive:
     src: https://github.com//ogham/exa/releases/download/v0.9.0/exa-linux-x86_64-0.9.0.zip
     dest: /tmp
-    remote_src: yes
+    remote_src: true
   notify:
     - Move exa in to PATH
 
 
 - name: Add sqlitebrowser ppa
-  become: yes
+  become: true
   apt_repository:
     repo: ppa:linuxgndu/sqlitebrowser
-    update_cache: yes
+    update_cache: true
 
 - name: Add OBS ppa
-  become: yes
+  become: true
   apt_repository:
     repo: ppa:obsproject/obs-studio
-    update_cache: yes
+    update_cache: true
 
 # https://support.system76.com/articles/codecs/
 # sudo DEBIAN_FRONTEND=noninteractive apt-get -y install ubuntu-restricted-addons
@@ -105,13 +106,13 @@
 
 - name: Install alacritty and code - Pop packages
   block:
-  - name: Install alacritty and code
-    become: true
-    apt:
-      name: ['alacritty', 'code']
+    - name: Install alacritty and code
+      become: true
+      apt:
+        name: ['alacritty', 'code']
   rescue:
-  - debug:
-      msg: 'Can not install alacritty and code. Add PPAs if you are using Ubuntu.'
+    - debug:
+        msg: 'Can not install alacritty and code. Add PPAs if you are using Ubuntu.'
 
 # - name: Create a symbolic link for VS Code Dictionaries
 #   file:
@@ -123,13 +124,13 @@
 - name: Install virtualization packages
   become: true
   apt:
-    name: [ 'qemu', 'ebtables', 'virt-manager', 'virtualbox']
-  when:  ansible_facts['system_vendor'] !=  "QEMU"
+    name: ['qemu', 'ebtables', 'virt-manager', 'virtualbox']
+  when: ansible_facts['system_vendor'] !=  "QEMU"
 
 - name: Install ansible
   become: true
   pip:
-    name: ['ansible','ansible-lint']
+    name: ['ansible', 'ansible-lint']
     state: latest
 
 - name: Install Uni packages
@@ -151,7 +152,7 @@
     method: user
 
 - name: Add the flathub flatpak repository remote to the system installation
-  become: yes
+  become: true
   community.general.flatpak_remote:
     name: flathub
     state: present
